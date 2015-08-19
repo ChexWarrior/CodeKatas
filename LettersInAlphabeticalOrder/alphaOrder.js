@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var processInput = document.querySelector("input[name='input']");
         var inputValue = processInput.value;
         console.log(inputValue);
-        alert(isWordAlphabetic(inputValue.toLowerCase()));
+        alert(isWordAlphabetic(inputValue.trim().toLowerCase()));
     });
 });
 
