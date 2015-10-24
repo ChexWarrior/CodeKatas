@@ -27,9 +27,10 @@ if($handle) {
         //print_r(str_split($buffer));
         $currentLevel = -1;
         processLine(str_split($buffer), $currentLevel, $captures, $numberColumns, $rowIndex, $numberRows);
+        echo "\n";
     }
-    echo "\n";
-    print_r($captures);
+    // echo "\n";
+    // print_r($captures);
     fclose($handle);
 } else {
     echo "$filename could not be opened!\n";
