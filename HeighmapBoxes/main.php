@@ -11,7 +11,7 @@
 $filename = $argv[1];
 $handle = fopen($filename,"r");
 //Determines the level of the next square
-$currentLevel = 0;
+//$currentLevel = -1;
 //Holds info about incompleted squares
 $captures = array();
 if($handle) {
@@ -25,7 +25,8 @@ if($handle) {
     for($rowIndex = 0; $rowIndex < $numberRows; $rowIndex += 1) {
         $buffer = fgets($handle, 4096);
         //print_r(str_split($buffer));
-        processLine(str_split($buffer), $currentLevel, $captures, $numberColumns, $rowIndex);
+        $currentLevel = -1;
+        processLine(str_split($buffer), $currentLevel, $captures, $numberColumns, $rowIndex, $numberRows);
     }
     echo "\n";
     print_r($captures);
@@ -35,14 +36,20 @@ if($handle) {
 }
 //Read each character in line from left to right:
 //If a + is encountered store this in array 
-function processLine($line, $currentLevel, &$captures, $numColumns, $currentRow) {
+
+//every time we encounter a | we need to check if this ends or begins a square and adjust level accordingly
+//how to know if | is end or beginning? check if it's related + (closest one above it)
+function processLine($line, &$currentLevel, &$captures, $numColumns, $currentRow, $numberRows) {
     $cornerExists = false;
     $lastSideLength = 0;
     $container = array();
+    $sideContainer = array();
+    $lastMatchLeftSide = false;
+    $lastMatchRightSide = false;
     for($colIndex = 0; $colIndex < $numColumns; $colIndex += 1) {
         if($line[$colIndex] == " ") {
-            //echo fillSpace($currentLevel);
-            echo $line[$colIndex];
+            echo fillSpace($currentLevel);
+            //echo $line[$colIndex];
         } else if($line[$colIndex] == "+") {
             echo $line[$colIndex];
             $container = determineSquareCapture($captures, $colIndex, $currentRow, $cornerExists, $lastSideLength);
@@ -51,20 +58,48 @@ function processLine($line, $currentLevel, &$captures, $numColumns, $currentRow)
         } else if($line[$colIndex] == "-") {
             echo $line[$colIndex];
             $lastSideLength += 1;
-        } else {
+        } else if($line[$colIndex] == "|") {
+            echo $line[$colIndex];
+            $lastMatchRow = $numberRows + 1;
+            foreach($captures as $corner) {
+                $leftSide = $corner["left_column"] == $colIndex;
+                $rightSide = $corner["right_column"] == $colIndex;
+                if($leftSide || $rightSide) {
+                    if($lastMatchRow > $currentRow - $corner["row"]) {
+                        $lastMatchRightSide = $rightSide;
+                        $lastMatchLeftSide = $leftSide;
+                    }
+                }
+            }
+
+            if($lastMatchLeftSide) {
+                $currentLevel += 1;
+            } else if($lastMatchRightSide) {
+                $currentLevel -= 1; 
+            }
+            //store the | and determine the column of the nearest + above it 
+            //foreach | in this array determine if they are opposite ends of the same
+            //square by seeing if their related + are the same row if so then subtract one from
+            //the level, otherwise add one to the level
+
+        }
+        else {
             echo $line[$colIndex];
         }
     }
 }
+
+ 
 
 function determineSquareCapture(&$captures, $currentCol, $currentRow, $cornerExists, $lastSideLength) {
     // if there is no other + in the array...
     if($cornerExists) {
         $cornerExists = false;
         array_push($captures, array(
-            $lastSideLength,
-            $currentCol,
-            $currentRow
+            "length" => $lastSideLength,
+            "right_column" => $currentCol,
+            "left_column" => $currentCol - $lastSideLength - 1,
+            "row" => $currentRow
         ));
         $lastSideLength = 0;
     } else {
