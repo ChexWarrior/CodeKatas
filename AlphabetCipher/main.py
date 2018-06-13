@@ -8,18 +8,16 @@ values = (
   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
 )
 
-# extend secret_word out to same length as message
-extended_secret_word = ""
+# TODO Handle case when secret_word is longer than message
+while len(secret_word) < len(message):
+  secret_word += secret_word
 
-while len(extended_secret_word) < len(message):
-  extended_secret_word += secret_word
-
-if len(extended_secret_word) > len(message):
-  diff = len(extended_secret_word) - len(message)
-  slice_point = len(extended_secret_word) - diff
+if len(secret_word) > len(message):
+  diff = len(secret_word) - len(message)
+  slice_point = len(secret_word) - diff
   #print('Slice point is {0}'.format(slice_point))
-  extended_secret_word = extended_secret_word[:slice_point]
+  secret_word = secret_word[:slice_point]
 
 print(message)
-print(extended_secret_word)
+print(secret_word)
 
