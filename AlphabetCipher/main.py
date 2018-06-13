@@ -9,17 +9,17 @@ values = (
 )
 
 # extend secret_word out to same length as message
-secret_message = ""
+extended_secret_word = ""
 
-while len(secret_message) < len(message):
-  secret_message += secret_word
+while len(extended_secret_word) < len(message):
+  extended_secret_word += secret_word
 
-if len(secret_message) > len(message):
-  diff = len(secret_message) - len(message)
-  slice_point = len(secret_message) - diff
+if len(extended_secret_word) > len(message):
+  diff = len(extended_secret_word) - len(message)
+  slice_point = len(extended_secret_word) - diff
   #print('Slice point is {0}'.format(slice_point))
-  secret_message = secret_message[:slice_point]
+  extended_secret_word = extended_secret_word[:slice_point]
 
 print(message)
-print(secret_message)
+print(extended_secret_word)
 
