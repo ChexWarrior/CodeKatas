@@ -12,6 +12,14 @@ values = (
 secret_message = ""
 
 while len(secret_message) < len(message):
-  secret_message += secret_word;
+  secret_message += secret_word
 
-diff = len(secret_message) - len(message)
+if len(secret_message) > len(message):
+  diff = len(secret_message) - len(message)
+  slice_point = len(secret_message) - diff
+  #print('Slice point is {0}'.format(slice_point))
+  secret_message = secret_message[:slice_point]
+
+print(message)
+print(secret_message)
+
