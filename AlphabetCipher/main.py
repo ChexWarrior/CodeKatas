@@ -1,5 +1,6 @@
 message = input('Please enter the message to encrypt...')
 secret_word = input('Please enter the secret word...')
+encrypted_msg = ""
 
 print('You entered {0} for the message and {1} for the secret word!'.format(message, secret_word))
 
@@ -23,6 +24,19 @@ print(secret_word)
 
 i = 0
 for letter in message:
-  print(letter)
-  print(secret_word[i])
+  # print(letter)
+  # print(secret_word[i])
+  col_offset = values.index(secret_word[i])
+  row_offset = values.index(letter)
+  key = col_offset + row_offset
+  overflow = key - len(values)
+
+  if overflow > 0:
+    key = overflow
+  
+  encrypted_msg += values[key]
   i += 1
+
+print('Encrypted message is: {0}'.format(encrypted_msg))
+
+
