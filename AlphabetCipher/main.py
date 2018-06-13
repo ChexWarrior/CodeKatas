@@ -21,3 +21,8 @@ if len(secret_word) > len(message):
 print(message)
 print(secret_word)
 
+i = 0
+for letter in message:
+  print(letter)
+  print(secret_word[i])
+  i += 1
