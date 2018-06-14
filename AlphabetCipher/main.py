@@ -1,5 +1,5 @@
-message = input('Please enter the message to encrypt...')
-secret_word = input('Please enter the secret word...')
+message = input('Please enter the message to encrypt...\n')
+secret_word = input('Please enter the secret word...\n')
 encrypted_msg = ""
 
 print('You entered {0} for the message and {1} for the secret word!'.format(message, secret_word))
