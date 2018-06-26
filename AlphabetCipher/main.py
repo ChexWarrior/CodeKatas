@@ -1,9 +1,13 @@
+# take in a message and secrete word
 message = input('Please enter the message to encrypt...\n')
 secret_word = input('Please enter the secret word...\n')
+
+# variable for encrypted message
 encrypted_msg = ""
 
 print('You entered {0} for the message and {1} for the secret word!'.format(message, secret_word))
 
+# accounting for the range of letters from a to z
 values = (
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
@@ -24,6 +28,7 @@ if len(secret_word_pad) > len(message):
 print(message)
 print(secret_word_pad)
 
+# encode the message
 i = 0
 for letter in message:
   # print(letter)
