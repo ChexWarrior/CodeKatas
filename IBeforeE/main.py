@@ -2,13 +2,14 @@ def check(word):
   temp = ""
   i = -1
   while i * -1 <= len(word):
-    print(word[i])
+    #print(word[i])
+    current = word[i]
+    # if temp == "ei" and current != "c": return False    
+    # if temp == "ie" and current == "c": return False
+    temp = current + temp
+    # if len(temp) > 2: temp = temp[1:]
+    print(temp)
     i -= 1
-  # for letter in word:
-  #   if temp == "ei" and letter != "c": return False    
-  #   if temp == "ie" and letter == "c": return False
-  #   temp += letter
-  #   if len(temp) > 2: temp = temp[1:]
   
   return True
 
