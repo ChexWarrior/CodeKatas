@@ -1,7 +1,7 @@
 def check(word):
   temp = ""
-  i = -1
-  while i * -1 <= len(word):
+  i = len(word) - 1
+  while i > -1:
     current = word[i]
     if temp == "ei" and current != "c": return False    
     if temp == "ie" and current == "c": return False
