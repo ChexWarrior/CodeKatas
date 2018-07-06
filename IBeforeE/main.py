@@ -6,8 +6,10 @@ def check(word):
     if temp == "ei" and current != "c": return False    
     if temp == "ie" and current == "c": return False
     temp = current + temp
+
     if len(temp) > 2: 
       temp = temp[:len(temp) - 1]
+      
     i -= 1
   
   return True
