@@ -1,4 +1,4 @@
-file_name = input("Enter file name:\n")
+file_name = input("Enter file name: ")
 
 try:
   input_file = open(file_name, 'r')
@@ -31,6 +31,12 @@ elif input_line2[2] == ">=":
   is_minimum = True
 
 if is_minimum: 
-  print("Must use at least " + str(total_num_coins))
+  print("Must use at least %d" % (total_num_coins))
 else:
-  print("Must use at most " + str(total_num_coins))
+  print("Must use at most %d" % (total_num_coins))
+
+
+
+
+  
+  
