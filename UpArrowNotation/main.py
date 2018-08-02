@@ -1,7 +1,7 @@
 
 def multiply(value, amount):
-    if amount > 0:
-        return multiply(value * value, amount - 1)
+    if amount > 1:
+        return multiply(value + value, amount - 1)
     
     return value
 
