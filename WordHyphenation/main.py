@@ -1,3 +1,7 @@
-with open('./patterns.txt') as f:
-    for line in f:
+
+def readFile(file):
+    for line in file:
         print(line)
+
+with open('./patterns.txt') as patterns:
+    readFile(patterns)
