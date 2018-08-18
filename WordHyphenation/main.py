@@ -19,18 +19,46 @@ def check_match(word, pattern, checkStart, checkEnd):
     else:
         return pattern in word
 
-def match_patterns(target_word, spaces, patterns):
+def get_scores(pattern):
+    score_indices = {}
+
+    for index, character in enumerate(pattern):
+        if character.isdigit():
+            score_indices[index] = character
+    
+    return score_indices
+
+def score_match(spaces, word, pattern, scrubbed_pattern):
+    # find index of match in target word
+    match_index = word.find(scrubbed_pattern)
+    
+    # find index of scores in pattern
+    scores = get_scores(pattern)
+
+    # for each score add score index to match index
+    for index, value in scores.items():
+        if int(spaces[index + match_index]) < int(value):
+            spaces[index + match_index] = value
+    
+    return spaces
+
+def process_patterns(target_word, spaces, patterns):
     for pattern in patterns:
         pattern = pattern.strip()
         scrubbed_pattern = scrub_pattern(pattern)
         checkStart = pattern[0] == '.'
         checkEnd = pattern[-1] == '.'
         is_match = check_match(target_word, scrubbed_pattern, checkStart, checkEnd)
-
+        
         if is_match:
             print("Pattern: %s is a match!" % (pattern))
+            spaces = score_match(spaces, target_word, pattern, scrubbed_pattern)
+        
+    print(spaces)    
 
 with open('./patterns.txt') as patterns:
-    target_word = input('Enter word to hyphenate...')
-    spaces = len(target_word) - 1
-    match_patterns(target_word, spaces, patterns)
+    target_word = input('Enter word to hyphenate: ')
+
+    # count spaces before word start and after end
+    spaces = [0] * (len(target_word) + 1)
+    process_patterns(target_word, spaces, patterns)
