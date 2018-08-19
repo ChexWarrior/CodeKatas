@@ -47,10 +47,11 @@ def hypenate(spaces, word):
     # we can't hypenate those parts
     actual_spaces = spaces[1:-1]
     word_list = list(word)
-
+    hypens_inserted = 1
     for index, value in enumerate(actual_spaces):
         if int(value) % 2 == 1:
-            word_list.insert(index + 1, '-')
+            word_list.insert(index + hypens_inserted, '-')
+            hypens_inserted += 1
 
     hypenated_word = ''.join(word_list)
 
@@ -67,7 +68,7 @@ def process_patterns(target_word, spaces, patterns):
         if is_match:
             print("Pattern: %s is a match!" % (pattern))
             spaces = score_match(spaces, target_word, pattern, scrubbed_pattern)
-    
+            
     print("Space Scores: %s" % (spaces))
     return hypenate(spaces, target_word)
 
