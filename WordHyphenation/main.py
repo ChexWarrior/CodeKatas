@@ -39,8 +39,22 @@ def score_match(spaces, word, pattern, scrubbed_pattern):
     for index, value in scores.items():
         if int(spaces[index + match_index]) < int(value):
             spaces[index + match_index] = value
-    
+
     return spaces
+
+def hypenate(spaces, word):
+    # remove first and last space since 
+    # we can't hypenate those parts
+    actual_spaces = spaces[1:-1]
+    word_list = list(word)
+
+    for index, value in enumerate(actual_spaces):
+        if int(value) % 2 == 1:
+            word_list.insert(index + 1, '-')
+
+    hypenated_word = ''.join(word_list)
+
+    return hypenated_word
 
 def process_patterns(target_word, spaces, patterns):
     for pattern in patterns:
@@ -53,12 +67,15 @@ def process_patterns(target_word, spaces, patterns):
         if is_match:
             print("Pattern: %s is a match!" % (pattern))
             spaces = score_match(spaces, target_word, pattern, scrubbed_pattern)
-        
-    print(spaces)    
+    
+    print("Space Scores: %s" % (spaces))
+    return hypenate(spaces, target_word)
 
 with open('./patterns.txt') as patterns:
     target_word = input('Enter word to hyphenate: ')
 
     # count spaces before word start and after end
     spaces = [0] * (len(target_word) + 1)
-    process_patterns(target_word, spaces, patterns)
+    result = process_patterns(target_word, spaces, patterns)
+
+    print("Result: %s" % (result))
