@@ -36,9 +36,12 @@ def score_match(spaces, word, pattern, scrubbed_pattern):
     scores = get_scores(pattern)
 
     # for each score add score index to match index
+    num_scores = 0
     for index, value in scores.items():
         if index + match_index < len(spaces) and int(spaces[index + match_index]) < int(value):
-            spaces[index + match_index] = value
+            # each score already counted increases the count which needs to be accounted for
+            spaces[index + match_index - num_scores] = value
+            num_scores += 1
 
     return spaces
 
