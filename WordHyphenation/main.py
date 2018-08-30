@@ -75,11 +75,13 @@ def process_patterns(target_word, spaces, patterns):
     print("Space Scores: %s" % (spaces))
     return hypenate(spaces, target_word)
 
-with open('./patterns.txt') as patterns:
-    target_word = input('Enter word to hyphenate: ')
 
-    # count spaces before word start and after end
-    spaces = [0] * (len(target_word) + 1)
-    result = process_patterns(target_word, spaces, patterns)
+if __name__ == "__main__":
+    with open('./patterns.txt') as patterns:
+        target_word = input('Enter word to hyphenate: ')
 
-    print("Result: %s" % (result))
+        # count spaces before word start and after end
+        spaces = [0] * (len(target_word) + 1)
+        result = process_patterns(target_word, spaces, patterns)
+
+        print("Result: %s" % (result))
